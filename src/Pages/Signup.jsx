@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userName = nameRef.current.value.trim();
@@ -32,6 +33,9 @@ const Signup = () => {
       const data = await res.json();
       if (res.ok) {
         toast(data.message);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
         nameRef.current.value = "";
         emailRef.current.value = "";
         passwordRef.current.value = "";
@@ -92,6 +96,9 @@ const Signup = () => {
             "Sign Up"
           )}
         </button>
+        <h1 className="text-center text-blue-600 font-medium">
+          Already have an account ? <Link to="/">Login</Link>
+        </h1>
       </form>
     </div>
   );
