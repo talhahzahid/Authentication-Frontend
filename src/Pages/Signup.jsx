@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeClosed, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ const Signup = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,14 +74,26 @@ const Signup = () => {
           placeholder="Email"
           className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700 w-full"
         />
-
-        <input
-          ref={passwordRef}
-          required
-          type="password"
-          placeholder="Password"
-          className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700 w-full"
-        />
+        <div className="w-full relative">
+          <input
+            ref={passwordRef}
+            required
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700 w-full"
+          />
+          {showPassword ? (
+            <EyeClosed
+              onClick={() => setShowPassword(false)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+            />
+          ) : (
+            <Eye
+              onClick={() => setShowPassword(true)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+            />
+          )}
+        </div>
 
         <button
           type="submit"
